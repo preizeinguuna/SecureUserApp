@@ -1,80 +1,134 @@
-# SafeVault - Secure Web Application
+# SafeVault — Secure Web Application
 
-SafeVault is a secure web application built with **ASP.NET Core MVC** (.NET 8). The primary goal of this project is to showcase secure coding practices, dynamic authentication, Role-Based Access Control (RBAC), and security debugging techniques developed and refined with the assistance of **Microsoft Copilot**.
-
----
-
-## 🛠️ Project Structure & Architecture
-
-The application follows the classic ASP.NET Core Model-View-Controller (MVC) design pattern:
-
-* **`Controllers/`**: Manages application logic, authentication workflows, authorization policies, and route protections (`HomeController.cs`, `AdminController.cs`).
-* **`Models/`**: Defines data structures (`UserModel.cs`, `LoginModel.cs`) with strict Data Annotations for server-side validation.
-* **`Views/`**: Razor view templates providing UI for user registration, user login, and restricted admin dashboard interfaces.
+SafeVault is a web application built with **ASP.NET Core MVC and .NET 8**. The project focuses on secure coding practices, cookie-based authentication, Role-Based Access Control (RBAC), server-side input validation, and security vulnerability remediation, with development assistance from **Microsoft Copilot**.
 
 ---
 
-## 📋 Features Implemented 
+## 🛠️ Project Structure and Architecture
 
-* **Input Validation & Data Integrity**:
-  * Integrated C# Data Annotations (`[Required]`, `[EmailAddress]`) into data models to prevent malformed inputs and potential injection attacks.
-* **Form State Preservation**:
-  * Implemented `[HttpPost] Index` controller logic returning the submitted model state, ensuring user-entered data remains visible alongside error messages during validation failures.
-* **Standardized Codebase**:
-  * Cleaned up comments and maintained professional code documentation in English using Copilot pair programming.
+The application follows the Model-View-Controller (MVC) architectural pattern.
 
-* **Cookie-Based Authentication**:
-  * Configured native ASP.NET Core Cookie Authentication middleware to create and manage secure encrypted user sessions.
-* **Role-Based Access Control (RBAC)**:
-  * Established multi-role support assigning dynamic identity claims (`Admin` and `User` roles) upon successful credential verification.
-* **Protected Routes & Navigation**:
-  * Applied `[Authorize(Roles = "Admin")]` constraints on administrative controllers (`AdminController`), enforcing automated redirection to `/Home/Login` with a `ReturnUrl` parameter for unauthenticated requests.
-* **Universal Login Flow**:
-  * Built a single, responsive login view (`Login.cshtml`) handling both administrator and standard user authentication seamlessly.
-
-* **Security Vulnerability Auditing**:
-  * Identified and remediated unauthenticated endpoint leaks and improper session handling mechanisms.
-* **Session Termination (Logout)**:
-  * Implemented a secure `Logout` POST controller action utilizing `HttpContext.SignOutAsync()` to properly clear authentication cookies and terminate session privileges.
-* **UI & Authorization Testing**:
-  * Tested cookie isolation and role enforcement across multiple browser environments (Google Chrome and VS Code embedded browser) to verify session security against unauthorized access.
+- **`Controllers/`** — Handles application logic, authentication workflows, authorization policies, and route protection, including `HomeController.cs` and `AdminController.cs`.
+- **`Models/`** — Defines application data structures, including `UserModel.cs` and `LoginModel.cs`, with C# Data Annotations for server-side validation.
+- **`Views/`** — Contains Razor view templates for user registration, login, and restricted administrative pages.
 
 ---
 
-## 🔒 Security Summary & Vulnerability Resolution
+## 📋 Core Features
 
-| Category | Identified Issue / Vulnerability | Applied Fix / Security Countermeasure |
-| :--- | :--- | :--- |
-| **Authentication** | Missing session sign-out mechanism allowing persistent cookie retention. | Added dedicated `Logout` action clearing authentication cookies via `HttpContext.SignOutAsync()`. |
-| **Authorization** | Unprotected administrative routes allowing direct URL navigation. | Applied `[Authorize(Roles = "Admin")]` to restrict access exclusively to authorized users. |
-| **Validation** | Data reset on registration form errors, degrading user experience and security checks. | Updated controller `HttpPost` method to return the `UserModel` back to the Razor view. |
+### Input Validation and Data Integrity
+
+- Uses C# Data Annotations, including `[Required]` and `[EmailAddress]`, to validate submitted data and reject invalid input.
+
+### Form State Preservation
+
+- Preserves submitted model data when validation fails, allowing users to correct errors without re-entering all their information.
+- Returns the submitted model to the Razor view together with validation errors.
+
+### Cookie-Based Authentication
+
+- Uses ASP.NET Core Cookie Authentication middleware to manage authenticated user sessions.
+
+### Role-Based Access Control (RBAC)
+
+- Supports `Admin` and `User` roles through identity claims assigned during authentication.
+- Restricts administrative functionality to users with the `Admin` role.
+
+### Protected Routes and Navigation
+
+- Uses `[Authorize(Roles = "Admin")]` to protect administrative controllers.
+- Configures authentication redirection for unauthenticated requests, including a `ReturnUrl` parameter where applicable.
+
+### Session Termination (Logout)
+
+- Implements a logout POST action using `HttpContext.SignOutAsync()` to sign users out of the configured authentication scheme.
+
+---
+
+## 🔒 Security Summary and Vulnerability Resolution
+
+| Category | Identified Issue or Requirement | Applied Fix or Countermeasure |
+|---|---|---|
+| **Authentication** | Users needed a way to terminate their authenticated sessions. | Added a logout action using `HttpContext.SignOutAsync()` to sign out of the configured cookie authentication scheme. |
+| **Authorization** | Administrative routes needed protection against unauthorized access. | Applied `[Authorize(Roles = "Admin")]` to restrict access to users with the `Admin` role. |
+| **Validation** | Submitted registration data was lost when validation errors occurred. | Updated the POST action to return the submitted model to the Razor view so validation errors could be displayed alongside the entered data. |
+
+These changes address specific application behaviors. They should not be interpreted as a guarantee that the application is free of all security vulnerabilities.
 
 ---
 
 ## 🤖 Role of Microsoft Copilot
 
-Throughout the development lifecycle, **Microsoft Copilot** was utilized as an AI pair programming tool to:
-1. **Generate Secure Boilerplate Code**: Assisted in structuring ASP.NET Core MVC controllers, models, and Razor views adhering to best security practices.
-2. **Debug & Identify Security Vulnerabilities**: Guided the implementation of dynamic role claim creation, `ReturnUrl` redirection logic, and cookie sign-out routines.
-3. **Refactor & Document**: Standardized code formatting and created clean documentation in English.
+Microsoft Copilot was used as an AI-assisted development tool throughout the project.
+
+1. **Implementation Assistance** — Helped with structuring MVC controllers, models, Razor views, and authentication-related code.
+2. **Debugging and Security Analysis** — Assisted in investigating authentication, role-based authorization, `ReturnUrl` redirection, and logout behavior.
+3. **Code Refinement and Documentation** — Helped improve code readability, formatting consistency, and English-language documentation.
 
 ---
 
-## 🚀 How to Run the Application
+## 🚀 How to Run and Test the Application
 
-1. **Clone the Repository**:
-   ```bash
-   git clone [https://github.com/preizeinguuna/SafeVault.git](https://github.com/preizeinguuna/SafeVault.git)
-   cd SafeVault
-   
-## Build
+### Prerequisites
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- The project's source code
+
+### 1. Build the Application
+
+Open a terminal in the directory containing the project file (`.csproj`) and run:
 
 ```bash
 dotnet build
 ```
 
-Build status:
+A successful build should complete without compilation errors.
 
-```text
-Build succeeded
+### 2. Run the Application
+
+Run the following command:
+
+```bash
+dotnet run
 ```
+
+Open the local HTTP or HTTPS address displayed in the terminal.
+
+### 3. Test Authentication and Authorization
+
+Use the following test cases if the listed credentials are configured in the application.
+
+**Administrator Access**
+
+- Username: `admin`
+- Password: `password123`
+- Expected result: Successful login and redirection to `/Admin/Dashboard`.
+
+**Standard User Access**
+
+- Username: `user`
+- Password: `password123`
+- Expected result: Successful login and redirection to `/Home/Index`.
+
+**Registration Validation**
+
+- Username: `user`
+- Email: `user@user.com`
+- Expected result: The application validates the submitted input and displays the appropriate success message if the input is accepted.
+
+*Note: Test credentials and expected results must match the application's actual authentication and registration logic. Use these credentials only in a local test environment.*
+
+---
+
+## 🧪 Testing Focus
+
+The project focuses on verifying the following behaviors:
+
+- Authentication through the login form.
+- Role-based access restrictions for administrative routes.
+- Redirection of unauthenticated users to the login page.
+- Logout behavior and authentication cookie sign-out.
+- Server-side input validation and registration form error handling.
+
+Testing claims should reflect the checks actually performed during development.
+
