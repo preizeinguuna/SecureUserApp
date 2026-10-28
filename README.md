@@ -14,9 +14,8 @@ The application follows the classic ASP.NET Core Model-View-Controller (MVC) des
 
 ---
 
-## 📋 Features Implemented Across Activities
+## 📋 Features Implemented 
 
-### 🟢 Activity 1: Writing Secure Code Using Microsoft Copilot
 * **Input Validation & Data Integrity**:
   * Integrated C# Data Annotations (`[Required]`, `[EmailAddress]`) into data models to prevent malformed inputs and potential injection attacks.
 * **Form State Preservation**:
@@ -24,7 +23,6 @@ The application follows the classic ASP.NET Core Model-View-Controller (MVC) des
 * **Standardized Codebase**:
   * Cleaned up comments and maintained professional code documentation in English using Copilot pair programming.
 
-### 🟡 Activity 2: Implementing Authentication & Authorization Using Microsoft Copilot
 * **Cookie-Based Authentication**:
   * Configured native ASP.NET Core Cookie Authentication middleware to create and manage secure encrypted user sessions.
 * **Role-Based Access Control (RBAC)**:
@@ -34,7 +32,6 @@ The application follows the classic ASP.NET Core Model-View-Controller (MVC) des
 * **Universal Login Flow**:
   * Built a single, responsive login view (`Login.cshtml`) handling both administrator and standard user authentication seamlessly.
 
-### 🔴 Activity 3: Debugging and Resolving Security Issues Using Microsoft Copilot
 * **Security Vulnerability Auditing**:
   * Identified and remediated unauthenticated endpoint leaks and improper session handling mechanisms.
 * **Session Termination (Logout)**:
@@ -69,8 +66,8 @@ Throughout the development lifecycle, **Microsoft Copilot** was utilized as an A
    ```bash
    git clone [https://github.com/preizeinguuna/SafeVault.git](https://github.com/preizeinguuna/SafeVault.git)
    cd SafeVault
-
-   ## Build
+   
+## Build
 
 ```bash
 dotnet build
